@@ -488,8 +488,7 @@ class GameBoard():     #gamebaord class created
         print()
         print("%s " %self.__board, end ="")
         file_name = "Connect4_Saves.txt"
-        file_path = "C:\\Users\Mohammed Tai\Documents\Assessment 1.2 working .5\\"  #file save location
-        file = open(file_path + file_name, "w") #open file in wite mode
+        file = open(file_name, "w") #open file in wite mode
         file.write("")
         file.write("%s " %self.__board) #write board as a string
         file.close()    #close file
@@ -796,8 +795,7 @@ class Large_gameboard():    #all the methods are the same as the GameBoard class
         print()
         print("%s " %self.__board, end ="")
         file_name = "Connect4_Saves.txt"
-        file_path = "C:\\Users\Mohammed Tai\Documents\Assessment 1.2 working .5\\"
-        file = open(file_path + file_name, "w")
+        file = open(file_name, "w")
         file.write("")
         file.write("%s " %self.__board)
         file.close()
