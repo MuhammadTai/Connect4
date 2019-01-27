@@ -2,8 +2,7 @@ import tkinter  # used for the GUI of connect 4 game
 import subprocess
 import time     #for computer player and animations
 from tkinter import messagebox #display end game messages such as winner/draw
-
-
+import os
 import ast
 
 from sys import exit    #used to exit game
@@ -14,8 +13,10 @@ from subprocess import call
 from gameboard import Large_gameboard
 
 
+
 class GameGUI:
     load = False;
+    leave = False;
         
     def intialise_dynamic(self):
 
@@ -40,6 +41,7 @@ class GameGUI:
         # Creating the connect 4 GUI grid, which consist of buttons in a grid
         for x in range (6):
             for y in range (7):
+
                 # storing the deafult image (from __init__ method) and empty text spaces in all buttons within the grid/loop
 
                 self.button = tkinter.Button(self.mw, image = self.default_image, text = " ", font = ('Arial 30 bold'),
@@ -71,11 +73,15 @@ class GameGUI:
                     print(self.load);
                     
                     self._board = self.gboard.get_gameboard()
+                    try:
+                        file = open ("Connect4_Saves.txt", "r") #open file
                     
-                    file = open ("Connect4_Saves.txt", "r") #open file
+                    except FileNotFoundError:
 
-                    
-                    
+                        print("\n\n\tSave File is not found!\n\n\tYou need to play a game, or the last game was already finished\n")
+                        self.leave = True;
+                        return;
+                                            
                     #button = self.buttons_2d_list[0][5]
                     #print(button)
                     for line in file:
@@ -101,6 +107,10 @@ class GameGUI:
                         
                                   
                     file.close()
+
+                
+                if (self.leave == True):
+                    return
 
                 if (self.load == True): 
                     loading(button =self.button)
@@ -239,6 +249,7 @@ class GameGUI:
             is_full = self.gboard.is_board_full()
             
             if winner == True:          #condition of winner
+                os.remove("Connect4_Saves.txt")
                 if p.get_player_circle() == "Y":
                     win_message = ("Yellow Player is the Winner!" )
                 else:
@@ -249,6 +260,7 @@ class GameGUI:
                 return
 
             elif is_full == True:
+                os.remove("Connect4_Saves.txt")
                 messagebox.showinfo("Winner Info", "The game ended in a draw!")
                 self.mw.destroy()
                 return      #return back to elif loop in game_menu, display pause() print statement
